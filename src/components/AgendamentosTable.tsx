@@ -136,9 +136,9 @@ export const AgendamentosTable = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="todos">Todos</SelectItem>
-                  <SelectItem value="AGENDADO">Agendado</SelectItem>
-                  <SelectItem value="CANCELADO">Cancelado</SelectItem>
-                  <SelectItem value="REAGENDADO">Reagendado</SelectItem>
+                  <SelectItem value="AGENDADO">AGENDADO</SelectItem>
+                  <SelectItem value="CANCELADO">CANCELADO</SelectItem>
+                  <SelectItem value="REAGENDADO">REAGENDADO</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -157,7 +157,7 @@ export const AgendamentosTable = () => {
                     {dataInicial ? format(dataInicial, "PPP") : <span>Selecionar data</span>}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
                   <Calendar
                     mode="single"
                     selected={dataInicial}
@@ -183,7 +183,7 @@ export const AgendamentosTable = () => {
                     {dataFinal ? format(dataFinal, "PPP") : <span>Selecionar data</span>}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
                   <Calendar
                     mode="single"
                     selected={dataFinal}

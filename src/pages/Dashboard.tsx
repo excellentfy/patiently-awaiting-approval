@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import { Header } from "@/components/Header";
-import { AgendamentosTable } from "@/components/AgendamentosTable";
+import { AgendamentosList } from "@/components/AgendamentosList";
 import { StatsCards } from "@/components/StatsCards";
 import { ChartsSection } from "@/components/ChartsSection";
 
@@ -28,9 +28,9 @@ export const Dashboard = () => {
         {/* Cards de Estatísticas */}
         <StatsCards />
 
-        {/* Tabela de Agendamentos */}
+        {/* Lista de Agendamentos Segmentados */}
         <div className="mb-8">
-          <AgendamentosTable />
+          <AgendamentosList />
         </div>
 
         {/* Gráficos */}

@@ -1,136 +1,162 @@
-import { AgendamentoCard } from "./AgendamentoCard";
-import { Loader2, Calendar, AlertCircle } from "lucide-react";
-
-// Mock data for development - will be replaced when Supabase is connected
-const mockAgendamentos = [
-  {
-    id: 1,
-    NOME: "João Silva",
-    DATA: "2025-01-22",
-    HORA: "09:00",
-    STATUS: "AGENDADO",
-    PROFISSIONAL: "Dr. Maria Santos",
-    CONTATO: "(11) 99999-9999"
-  },
-  {
-    id: 2,
-    NOME: "Ana Costa",
-    DATA: "2025-01-22",
-    HORA: "10:30",
-    STATUS: "REAGENDADO",
-    PROFISSIONAL: "Dr. João Pereira",
-    CONTATO: "(11) 88888-8888"
-  },
-  {
-    id: 3,
-    NOME: "Carlos Oliveira",
-    DATA: "2025-01-23",
-    HORA: "14:00",
-    STATUS: "CANCELADO",
-    PROFISSIONAL: "Dra. Paula Lima",
-    CONTATO: "(11) 77777-7777"
-  },
-  {
-    id: 4,
-    NOME: "Mariana Ferreira",
-    DATA: "2025-01-23",
-    HORA: "15:30",
-    STATUS: "AGENDADO",
-    PROFISSIONAL: "Dr. Pedro Alves",
-    CONTATO: "(11) 66666-6666"
-  },
-  {
-    id: 5,
-    NOME: "Roberto Santos",
-    DATA: "2025-01-24",
-    HORA: "08:00",
-    STATUS: "AGENDADO",
-    PROFISSIONAL: "Dra. Lucia Mendes",
-    CONTATO: "(11) 55555-5555"
-  },
-  {
-    id: 6,
-    NOME: "Patricia Lima",
-    DATA: "2025-01-24",
-    HORA: "11:00",
-    STATUS: "REAGENDADO",
-    PROFISSIONAL: "Dr. Fernando Costa",
-    CONTATO: "(11) 44444-4444"
-  }
-];
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Calendar as CalendarComponent, CalendarIcon, Filter } from "lucide-react";
+import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAgendamentosSegmentados } from "@/hooks/useAgendamentosSegmentados";
+import { AgendamentosTempoReal } from "./AgendamentosTempoReal";
+import { HistoricoDia } from "./HistoricoDia";
+import { CancelamentosDia } from "./CancelamentosDia";
 
 export const AgendamentosList = () => {
-  // Mock loading/error states for demonstration
-  const isLoading = false;
-  const error = false;
-  const agendamentos = mockAgendamentos;
+  const { data: agendamentosSegmentados, isLoading } = useAgendamentosSegmentados();
+  const [profissionalFilter, setProfissionalFilter] = useState("todos");
+  const [statusFilter, setStatusFilter] = useState("todos");
+  const [dataInicial, setDataInicial] = useState<Date>();
+  const [dataFinal, setDataFinal] = useState<Date>();
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
-        <div className="bg-white p-6 rounded-2xl shadow-lg">
-          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" />
-          <span className="text-lg font-semibold text-gray-700">Carregando agendamentos...</span>
-          <p className="text-sm text-gray-500 mt-2">Conectando com o banco de dados</p>
-        </div>
-      </div>
-    );
-  }
+  const filtrarAgendamentos = (agendamentos: any[]) => {
+    return agendamentos?.filter(agendamento => {
+      const profissionalMatch = profissionalFilter === "todos" || agendamento.PROFISSIONAL === profissionalFilter;
+      const statusMatch = statusFilter === "todos" || agendamento.STATUS === statusFilter;
+      return profissionalMatch && statusMatch;
+    }) || [];
+  };
 
-  if (error) {
-    return (
-      <div className="text-center py-16 bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl border border-red-100">
-        <div className="bg-white p-8 rounded-2xl shadow-lg inline-block">
-          <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <p className="text-xl font-semibold text-red-600 mb-2">Erro ao carregar agendamentos</p>
-          <p className="text-gray-600 mb-4">Não foi possível conectar com o banco de dados</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors font-medium"
-          >
-            Tentar novamente
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!agendamentos || agendamentos.length === 0) {
-    return (
-      <div className="text-center py-16 bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl border border-gray-200">
-        <div className="bg-white p-8 rounded-2xl shadow-lg inline-block">
-          <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-xl font-semibold text-gray-600 mb-2">Nenhum agendamento encontrado</p>
-          <p className="text-gray-500">Não há agendamentos para exibir no momento</p>
-        </div>
-      </div>
-    );
-  }
+  const agendamentosTempoRealFiltrados = filtrarAgendamentos(agendamentosSegmentados?.tempoReal || []);
+  const agendamentosHistoricoFiltrados = filtrarAgendamentos(agendamentosSegmentados?.historico || []);
+  const cancelamentosFiltrados = filtrarAgendamentos(agendamentosSegmentados?.cancelamentos || []);
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-6 rounded-2xl border border-primary/20">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="bg-primary/20 p-2 rounded-lg">
-              <Calendar className="w-6 h-6 text-primary" />
+      {/* Agendamentos - Tempo Real */}
+      <AgendamentosTempoReal 
+        agendamentos={agendamentosTempoRealFiltrados} 
+        isLoading={isLoading} 
+      />
+
+      {/* Histórico do Dia */}
+      <HistoricoDia 
+        agendamentos={agendamentosHistoricoFiltrados} 
+        isLoading={isLoading} 
+      />
+
+      {/* Cancelamentos */}
+      <CancelamentosDia 
+        agendamentos={cancelamentosFiltrados} 
+        isLoading={isLoading} 
+      />
+
+      {/* Filtros */}
+      <Card className="bg-card border-border">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold text-card-foreground flex items-center gap-2">
+            <Filter className="w-5 h-5 text-primary" />
+            Filtros
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label className="text-base font-medium text-card-foreground mb-2 block">Profissional</label>
+              <Select value={profissionalFilter} onValueChange={setProfissionalFilter}>
+                <SelectTrigger className="bg-background border-border">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                   <SelectItem value="todos">Todos</SelectItem>
+                   <SelectItem value="Allan Marques🪒">Allan Marques🪒</SelectItem>
+                   <SelectItem value="Gil Pedrosa✂️">Gil Pedrosa✂️</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-800">Total de Agendamentos</h3>
-              <p className="text-gray-600">Encontrados na base de dados</p>
+              <label className="text-base font-medium text-card-foreground mb-2 block">Status</label>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="bg-background border-border">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  <SelectItem value="AGENDADO">AGENDADO</SelectItem>
+                  <SelectItem value="CANCELADO">CANCELADO</SelectItem>
+                  <SelectItem value="REAGENDADO">REAGENDADO</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="text-base font-medium text-card-foreground mb-2 block">Data Inicial</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-background border-border",
+                      !dataInicial && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dataInicial ? format(dataInicial, "PPP") : <span>Selecionar data</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={dataInicial}
+                    onSelect={setDataInicial}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div>
+              <label className="text-base font-medium text-card-foreground mb-2 block">Data Final</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-background border-border",
+                      !dataFinal && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {dataFinal ? format(dataFinal, "PPP") : <span>Selecionar data</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={dataFinal}
+                    onSelect={setDataFinal}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
-          <div className="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-2xl">
-            {agendamentos.length}
+          <div className="flex justify-end mt-4">
+            <Button 
+              variant="outline" 
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              onClick={() => {
+                setProfissionalFilter("todos");
+                setStatusFilter("todos");
+                setDataInicial(undefined);
+                setDataFinal(undefined);
+              }}
+            >
+              Limpar Filtros
+            </Button>
           </div>
-        </div>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {agendamentos.map((agendamento) => (
-          <AgendamentoCard key={agendamento.id} agendamento={agendamento} />
-        ))}
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
