@@ -120,7 +120,13 @@ export const ChartsSection = () => {
                  layout="horizontal"
                  margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
                >
-                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <CartesianGrid 
+                    strokeDasharray="3 3" 
+                    stroke="hsl(var(--muted-foreground))" 
+                    opacity={0.3}
+                    horizontal={true}
+                    vertical={true}
+                  />
                  <XAxis 
                    type="number"
                    stroke="hsl(var(--muted-foreground))"
