@@ -2,9 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarComponent, CalendarIcon, Filter } from "lucide-react";
 import { useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { DateInput } from "@/components/ui/date-input";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAgendamentosSegmentados } from "@/hooks/useAgendamentosSegmentados";
@@ -90,55 +88,21 @@ export const AgendamentosList = () => {
             </div>
             <div>
               <label className="text-base font-medium text-card-foreground mb-2 block">Data Inicial</label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal bg-background border-border",
-                      !dataInicial && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dataInicial ? format(dataInicial, "PPP") : <span>Selecionar data</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={dataInicial}
-                    onSelect={setDataInicial}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateInput
+                value={dataInicial}
+                onChange={setDataInicial}
+                placeholder="Selecionar data inicial"
+                className="bg-background border-border"
+              />
             </div>
             <div>
               <label className="text-base font-medium text-card-foreground mb-2 block">Data Final</label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal bg-background border-border",
-                      !dataFinal && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dataFinal ? format(dataFinal, "PPP") : <span>Selecionar data</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={dataFinal}
-                    onSelect={setDataFinal}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateInput
+                value={dataFinal}
+                onChange={setDataFinal}
+                placeholder="Selecionar data final"
+                className="bg-background border-border"
+              />
             </div>
           </div>
           <div className="flex justify-end mt-4">

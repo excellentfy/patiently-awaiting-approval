@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, BarChart, Bar, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, BarChart, Bar, ResponsiveContainer, ComposedChart } from "recharts";
 import { useChartsData } from "@/hooks/useChartsData";
 
 const chartConfig = {
@@ -115,7 +115,7 @@ export const ChartsSection = () => {
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-               <BarChart 
+               <ComposedChart 
                  data={chartData?.horarioData || []}
                  layout="horizontal"
                  margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
@@ -144,8 +144,16 @@ export const ChartsSection = () => {
                    fill="hsl(var(--primary))"
                    radius={[0, 4, 4, 0]}
                  />
+                 <Line 
+                   type="monotone"
+                   dataKey="agendamentos" 
+                   stroke="#ff8c00"
+                   strokeWidth={3}
+                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 4 }}
+                   connectNulls={false}
+                 />
                  <ChartTooltip content={<ChartTooltipContent />} />
-               </BarChart>
+               </ComposedChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>
