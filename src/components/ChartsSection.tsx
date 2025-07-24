@@ -115,32 +115,31 @@ export const ChartsSection = () => {
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart 
-                data={chartData?.horarioData || []}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis 
-                  dataKey="time" 
-                  stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
-                />
-                <YAxis 
-                  stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
-                  label={{ value: 'Qtd', angle: -90, position: 'insideLeft' }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="agendamentos" 
-                  stroke="hsl(var(--primary))" 
-                  strokeWidth={3}
-                  dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: 'hsl(var(--primary))', strokeWidth: 2, fill: 'hsl(var(--background))' }}
-                  connectNulls={false}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-              </LineChart>
+               <BarChart 
+                 data={chartData?.horarioData || []}
+                 layout="horizontal"
+                 margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+               >
+                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                 <XAxis 
+                   type="number"
+                   stroke="hsl(var(--muted-foreground))"
+                   fontSize={12}
+                   label={{ value: 'Qtd', position: 'insideBottom', offset: -5 }}
+                 />
+                 <YAxis 
+                   type="category"
+                   dataKey="time" 
+                   stroke="hsl(var(--muted-foreground))"
+                   fontSize={12}
+                 />
+                 <Bar 
+                   dataKey="agendamentos" 
+                   fill="hsl(var(--primary))"
+                   radius={[0, 4, 4, 0]}
+                 />
+                 <ChartTooltip content={<ChartTooltipContent />} />
+               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>

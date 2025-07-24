@@ -75,9 +75,9 @@ export const HistoricoDia = ({ agendamentos, isLoading }: HistoricoDiaProps) => 
               ) : (
                 agendamentos.map((agendamento) => (
                   <TableRow key={agendamento.id} className="border-border hover:bg-muted/30">
-                    <TableCell className="font-medium text-card-foreground text-base">{agendamento.NOME}</TableCell>
-                    <TableCell className="text-muted-foreground text-base">{formatDate(agendamento.DATA)}</TableCell>
-                    <TableCell className="text-muted-foreground text-base">{formatTime(agendamento.HORA)}</TableCell>
+                     <TableCell className="font-medium text-card-foreground text-lg">{agendamento.NOME}</TableCell>
+                     <TableCell className="text-muted-foreground text-base">{formatDate(agendamento.DATA)}</TableCell>
+                     <TableCell className="text-muted-foreground text-base font-bold">{formatTime(agendamento.HORA)}</TableCell>
                     <TableCell>{getStatusBadge(agendamento.STATUS)}</TableCell>
                     <TableCell className="text-muted-foreground text-base">{agendamento.PROFISSIONAL}</TableCell>
                   </TableRow>
