@@ -92,11 +92,11 @@ export const ChartsSection = () => {
         </CardHeader>
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
+             <ResponsiveContainer width="100%" height="100%">
                <ComposedChart 
                  data={chartData?.horarioData || []}
                  layout="horizontal"
-                 margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+                 margin={{ top: 20, right: 60, left: 50, bottom: 5 }}
                >
                   <CartesianGrid 
                     strokeDasharray="3 3" 
@@ -126,9 +126,9 @@ export const ChartsSection = () => {
                    type="monotone"
                    dataKey="agendamentos" 
                    stroke="#ff8c00"
-                   strokeWidth={4}
-                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 5 }}
-                   activeDot={{ r: 8, fill: '#ff8c00', strokeWidth: 2, stroke: '#ffffff' }}
+                   strokeWidth={3}
+                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 4 }}
+                   activeDot={{ r: 6, fill: '#ff8c00', strokeWidth: 2, stroke: '#ffffff' }}
                    connectNulls={false}
                  />
                  <ChartTooltip content={<ChartTooltipContent />} />
