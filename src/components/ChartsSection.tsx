@@ -150,6 +150,7 @@ export const ChartsSection = () => {
                    stroke="#ff8c00"
                    strokeWidth={3}
                    dot={{ fill: '#ff8c00', strokeWidth: 2, r: 4 }}
+                   activeDot={{ r: 6, fill: '#ff8c00' }}
                    connectNulls={false}
                  />
                  <ChartTooltip content={<ChartTooltipContent />} />
