@@ -20,28 +20,6 @@ const chartConfig = {
   },
 };
 
-
-// Componente customizado para barra com animação hover
-const AnimatedBar = (props: any) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-  
-  return (
-    <g 
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <Bar 
-        {...props}
-        className="transition-all duration-700 ease-in-out"
-        style={{ 
-          transformOrigin: 'bottom',
-          transform: isHovered ? 'scaleY(1)' : 'scaleY(0.1)'
-        }}
-      />
-    </g>
-  );
-};
-
 export const ChartsSection = () => {
   const { data: chartData, isLoading } = useChartsData();
 
@@ -123,7 +101,7 @@ export const ChartsSection = () => {
                   <CartesianGrid 
                     strokeDasharray="3 3" 
                     stroke="hsl(var(--muted-foreground))" 
-                    strokeOpacity={0.8}
+                    strokeOpacity={0.3}
                     horizontal={false}
                     vertical={true}
                   />
@@ -148,9 +126,9 @@ export const ChartsSection = () => {
                    type="monotone"
                    dataKey="agendamentos" 
                    stroke="#ff8c00"
-                   strokeWidth={3}
-                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 4 }}
-                   activeDot={{ r: 6, fill: '#ff8c00' }}
+                   strokeWidth={4}
+                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 5 }}
+                   activeDot={{ r: 8, fill: '#ff8c00', strokeWidth: 2, stroke: '#ffffff' }}
                    connectNulls={false}
                  />
                  <ChartTooltip content={<ChartTooltipContent />} />

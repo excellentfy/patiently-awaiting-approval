@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,19 +22,18 @@ function DateInput({ value, onChange, placeholder = "dd/mm/aaaa", className }: D
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            "justify-start text-left font-normal",
-            !value && "text-muted-foreground",
-            className
-          )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? displayValue : placeholder}
-        </Button>
+        <div className="relative">
+          <Input
+            type="text"
+            placeholder={placeholder}
+            value={displayValue}
+            readOnly
+            className={cn("pr-10 cursor-pointer", className)}
+          />
+          <CalendarIcon className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        </div>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-0 z-50 bg-background border border-border shadow-md" align="start">
         <Calendar
           mode="single"
           selected={value}

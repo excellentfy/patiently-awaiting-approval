@@ -1,3 +1,4 @@
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar as CalendarComponent } from "lucide-react";
@@ -23,7 +24,9 @@ interface AgendamentosTempoRealProps {
 
 export const AgendamentosTempoReal = ({ agendamentos, isLoading }: AgendamentosTempoRealProps) => {
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+    // Parse the date string correctly to avoid timezone issues
+    const [year, month, day] = dateString.split('-');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
     return date.toLocaleDateString('pt-BR');
   };
 
