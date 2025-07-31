@@ -94,7 +94,7 @@ export const ChartsSection = () => {
           <ChartContainer config={chartConfig} className="h-[300px]">
              <ResponsiveContainer width="100%" height="100%">
                <ComposedChart 
-                 data={chartData?.horarioData || []}
+                 data={chartData?.horarioData?.filter(item => item.agendamentos > 0) || []}
                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                >
                   <CartesianGrid 
@@ -124,9 +124,9 @@ export const ChartsSection = () => {
                    type="monotone"
                    dataKey="agendamentos" 
                    stroke="#ff8c00"
-                   strokeWidth={3}
-                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 4 }}
-                   activeDot={{ r: 6, fill: '#ff8c00', strokeWidth: 2, stroke: '#ffffff' }}
+                   strokeWidth={4}
+                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 6 }}
+                   activeDot={{ r: 8, fill: '#ff8c00', strokeWidth: 2, stroke: '#ffffff' }}
                    connectNulls={false}
                  />
                  <ChartTooltip content={<ChartTooltipContent />} />
