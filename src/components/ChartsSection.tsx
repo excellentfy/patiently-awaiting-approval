@@ -95,32 +95,30 @@ export const ChartsSection = () => {
              <ResponsiveContainer width="100%" height="100%">
                <ComposedChart 
                  data={chartData?.horarioData || []}
-                 layout="horizontal"
-                 margin={{ top: 20, right: 60, left: 50, bottom: 5 }}
+                 margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                >
                   <CartesianGrid 
                     strokeDasharray="3 3" 
                     stroke="hsl(var(--muted-foreground))" 
                     strokeOpacity={0.3}
-                    horizontal={false}
-                    vertical={true}
                   />
                  <XAxis 
-                   type="number"
-                   stroke="hsl(var(--muted-foreground))"
-                   fontSize={12}
-                   label={{ value: 'Qtd', position: 'insideBottom', offset: -5 }}
-                 />
-                 <YAxis 
-                   type="category"
                    dataKey="time" 
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
+                   angle={-45}
+                   textAnchor="end"
+                   height={60}
+                 />
+                 <YAxis 
+                   stroke="hsl(var(--muted-foreground))"
+                   fontSize={12}
+                   label={{ value: 'Qtd', angle: -90, position: 'insideLeft' }}
                  />
                  <Bar 
                    dataKey="agendamentos" 
                    fill="hsl(var(--primary))"
-                   radius={[0, 4, 4, 0]}
+                   radius={[4, 4, 0, 0]}
                  />
                  <Line 
                    type="monotone"
