@@ -6,9 +6,7 @@ import './index.css'
 // Register service worker for PWA
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const swPath = window.location.pathname.includes('/aspergillus-vista-hub/') 
-      ? '/aspergillus-vista-hub/sw.js' 
-      : '/sw.js';
+    const swPath = '/aspergillus-vista-hub/sw.js';
     navigator.serviceWorker.register(swPath)
       .then((registration) => {
         console.log('SW registered: ', registration);

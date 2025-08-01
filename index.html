@@ -26,6 +26,22 @@
     <!-- Preload critical resources -->
     <link rel="modulepreload" href="./src/main.tsx" />
     
+    <!-- GitHub Pages SPA routing script -->
+    <script>
+      // Single Page Apps for GitHub Pages
+      // Check if we need to redirect from GitHub Pages 404 to index.html
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+    
     <script>
       console.log("HTML loaded on:", window.location.href);
       console.log("Environment detection:", {

@@ -6,17 +6,10 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Detectar se está sendo executado no Vercel
-  const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV;
-  // Para GitHub Pages, usar o nome do repositório
-  const isGitHubPages = mode === 'production' && !isVercel;
+  // Para GitHub Pages, sempre usar o base path correto
+  const base = '/aspergillus-vista-hub/';
   
-  let base = '/';
-  if (isGitHubPages) {
-    base = '/aspergillus-vista-hub/';
-  }
-  
-  console.log('Build environment:', { mode, isVercel, isGitHubPages, base });
+  console.log('Build environment:', { mode, base });
 
   return {
     base,

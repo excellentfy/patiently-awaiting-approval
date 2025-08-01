@@ -31,13 +31,8 @@ const App = () => {
     setIsReady(true);
   }, []);
 
-  // Detectar se está no Vercel (usa BrowserRouter) ou GitHub Pages (usa HashRouter)
-  const isVercel = typeof window !== 'undefined' && 
-    (window.location.hostname.includes('vercel.app') || 
-     window.location.hostname.includes('vercel.com') ||
-     window.location.hostname.includes('lovableproject.com'));
-
-  const RouterComponent = isVercel ? BrowserRouter : Router;
+  // Para GitHub Pages, sempre usar HashRouter
+  const RouterComponent = Router;
 
   if (!isReady) {
     return (
