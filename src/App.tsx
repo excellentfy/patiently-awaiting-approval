@@ -1,6 +1,6 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HashRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard } from "@/pages/Dashboard";
 import { Toaster } from "sonner";
 import { useEffect, useState } from "react";
@@ -18,12 +18,8 @@ const App = () => {
   const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
-    console.log("App component mounted");
-    console.log("Environment:", {
-      isVercel: typeof window !== 'undefined' && window.location.hostname.includes('vercel'),
-      hostname: typeof window !== 'undefined' ? window.location.hostname : 'unknown',
-      pathname: typeof window !== 'undefined' ? window.location.pathname : 'unknown'
-    });
+    console.log("App component mounted - GitHub Pages optimized");
+    console.log("Location:", window.location.href);
     
     // Aplicar tema escuro
     document.documentElement.classList.add('dark');

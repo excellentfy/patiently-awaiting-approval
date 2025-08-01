@@ -6,10 +6,11 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Para GitHub Pages, sempre usar o base path correto
-  const base = '/aspergillus-vista-hub/';
+  // Auto-detectar base path para GitHub Pages
+  const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1] || 'aspergillus-vista-hub';
+  const base = mode === 'production' ? `/${repoName}/` : '/';
   
-  console.log('Build environment:', { mode, base });
+  console.log('Build environment:', { mode, repoName, base });
 
   return {
     base,

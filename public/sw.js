@@ -1,15 +1,21 @@
-const CACHE_NAME = 'agendamentos-v1';
+const CACHE_NAME = 'asperus-dashboard-v1';
 const urlsToCache = [
-  '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
+  './',
+  './index.html',
+  './manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
+  console.log('SW: Installing');
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+      .then((cache) => {
+        console.log('SW: Caching files');
+        return cache.addAll(urlsToCache);
+      })
+      .catch((error) => {
+        console.log('SW: Cache failed', error);
+      })
   );
 });
 

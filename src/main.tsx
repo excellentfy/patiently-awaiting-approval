@@ -3,16 +3,19 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// Register service worker for PWA
+// Register service worker for PWA - GitHub Pages optimized
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const swPath = '/aspergillus-vista-hub/sw.js';
+    const basePath = document.querySelector('base')?.href || window.location.origin;
+    const swPath = new URL('sw.js', basePath).href;
+    console.log('Registering SW at:', swPath);
+    
     navigator.serviceWorker.register(swPath)
       .then((registration) => {
-        console.log('SW registered: ', registration);
+        console.log('SW registered successfully:', registration);
       })
       .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
+        console.log('SW registration failed:', registrationError);
       });
   });
 }
