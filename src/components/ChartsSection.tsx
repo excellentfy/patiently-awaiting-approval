@@ -105,6 +105,8 @@ export const ChartsSection = () => {
                    type="number"
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
+                   axisLine={false}
+                   tickLine={false}
                    label={{ value: 'Total de Agendamentos', position: 'insideBottom', offset: -10 }}
                  />
                  <YAxis 
@@ -113,6 +115,8 @@ export const ChartsSection = () => {
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
                    width={60}
+                   axisLine={false}
+                   tickLine={false}
                  />
                  <Bar 
                    dataKey="total" 
