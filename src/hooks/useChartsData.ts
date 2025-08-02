@@ -36,9 +36,9 @@ export const useChartsData = () => {
         { name: 'REAGENDADO', value: statusCounts.REAGENDADO || 0, color: '#f59e0b' }
       ];
 
-      // Dados para agendamentos por horário - APENAS DO DIA ATUAL
-      const horarioCounts = dadosHoje
-        .filter(item => item.STATUS === 'AGENDADO' || item.STATUS === 'REAGENDADO')
+      // Dados para horários de pico - TODOS OS DADOS HISTÓRICOS
+      const horariosPicoCounts = data
+        ?.filter(item => item.STATUS === 'AGENDADO' || item.STATUS === 'REAGENDADO')
         .reduce((acc: any, item) => {
           const hora = item.HORA ? item.HORA.toString().substring(0, 5) : '';
           if (hora) {
@@ -47,14 +47,14 @@ export const useChartsData = () => {
           return acc;
         }, {}) || {};
 
-      const horarioData = [];
-      for (let hour = 8; hour <= 20; hour++) {
-        const timeKey = `${hour.toString().padStart(2, '0')}:00`;
-        horarioData.push({
-          time: timeKey,
-          agendamentos: horarioCounts[timeKey] || 0
-        });
-      }
+      // Ordenar horários por frequência e pegar os top horários de pico
+      const horariosPicoData = Object.entries(horariosPicoCounts)
+        .map(([hora, count]) => ({
+          horario: hora,
+          total: count as number
+        }))
+        .sort((a, b) => b.total - a.total)
+        .slice(0, 10); // Top 10 horários de pico
 
       // Dados para performance por profissional - APENAS DO DIA ATUAL
       const profissionalCounts = dadosHoje
@@ -74,7 +74,7 @@ export const useChartsData = () => {
           color: cores[index % cores.length]
         }));
 
-      return { statusData, horarioData, performanceData };
+      return { statusData, horariosPicoData, performanceData };
     },
   });
 };

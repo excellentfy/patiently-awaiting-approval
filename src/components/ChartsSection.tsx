@@ -83,54 +83,47 @@ export const ChartsSection = () => {
         </CardContent>
       </Card>
 
-      {/* Gráfico de Agendamentos por Horário */}
+      {/* Gráfico de Horários de Pico */}
       <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle className="text-lg font-semibold text-card-foreground">
-            Agendamentos por Horário
+            Horários de Pico
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Horários mais procurados (dados históricos)
+          </p>
         </CardHeader>
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[300px]">
              <ResponsiveContainer width="100%" height="100%">
-               <ComposedChart 
-                 data={chartData?.horarioData?.filter(item => item.agendamentos > 0) || []}
-                 margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+               <BarChart 
+                 data={chartData?.horariosPicoData || []} 
+                 layout="horizontal"
+                 margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
                >
-                  <CartesianGrid 
-                    strokeDasharray="3 3" 
-                    stroke="hsl(var(--muted-foreground))" 
-                    strokeOpacity={0.3}
-                  />
                  <XAxis 
-                   dataKey="time" 
+                   type="number"
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
-                   angle={-45}
-                   textAnchor="end"
-                   height={60}
+                   label={{ value: 'Total de Agendamentos', position: 'insideBottom', offset: -10 }}
                  />
                  <YAxis 
+                   type="category"
+                   dataKey="horario" 
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
-                   label={{ value: 'Qtd', angle: -90, position: 'insideLeft' }}
+                   width={60}
                  />
                  <Bar 
-                   dataKey="agendamentos" 
+                   dataKey="total" 
                    fill="hsl(var(--primary))"
-                   radius={[4, 4, 0, 0]}
+                   radius={[0, 4, 4, 0]}
                  />
-                 <Line 
-                   type="monotone"
-                   dataKey="agendamentos" 
-                   stroke="#ff8c00"
-                   strokeWidth={4}
-                   dot={{ fill: '#ff8c00', strokeWidth: 2, r: 6 }}
-                   activeDot={{ r: 8, fill: '#ff8c00', strokeWidth: 2, stroke: '#ffffff' }}
-                   connectNulls={false}
+                 <ChartTooltip 
+                   formatter={(value) => [`${value} agendamentos`, 'Total']}
+                   labelFormatter={(label) => `Horário: ${label}`}
                  />
-                 <ChartTooltip content={<ChartTooltipContent />} />
-               </ComposedChart>
+               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>
