@@ -9,21 +9,21 @@ export const StatsCards = () => {
   const statsData = [
     {
       title: "Total de Agendamentos",
-      value: isLoading ? "..." : stats?.totalAgendamentos?.toString() || "0",
+      value: isLoading ? "..." : Math.floor(stats?.totalAgendamentos || 0).toString(),
       icon: Calendar,
       color: "text-orange-400",
       bgColor: "bg-orange-500/20"
     },
     {
       title: "Agendamentos Hoje",
-      value: isLoading ? "..." : stats?.agendamentosHoje?.toString() || "0", 
+      value: isLoading ? "..." : Math.floor(stats?.agendamentosHoje || 0).toString(), 
       icon: Calendar,
       color: "text-green-400",
       bgColor: "bg-green-500/20"
     },
     {
       title: "Profissionais Ativos",
-      value: isLoading ? "..." : stats?.profissionaisAtivos?.toString() || "0",
+      value: isLoading ? "..." : Math.floor(stats?.profissionaisAtivos || 0).toString(),
       icon: Users,
       color: "text-yellow-400", 
       bgColor: "bg-yellow-500/20"

@@ -96,38 +96,39 @@ export const ChartsSection = () => {
         <CardContent>
           <ChartContainer config={chartConfig} className="h-[300px]">
              <ResponsiveContainer width="100%" height="100%">
-               <BarChart 
+               <LineChart 
                  data={chartData?.horariosPicoData || []} 
-                 layout="horizontal"
-                 margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
+                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                >
+                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                  <XAxis 
-                   type="number"
+                   dataKey="hora"
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
                    axisLine={false}
                    tickLine={false}
-                   label={{ value: 'Total de Agendamentos', position: 'insideBottom', offset: -10 }}
+                   label={{ value: 'Hora do Dia', position: 'insideBottom', offset: -10 }}
                  />
                  <YAxis 
-                   type="category"
-                   dataKey="horario" 
                    stroke="hsl(var(--muted-foreground))"
                    fontSize={12}
-                   width={60}
                    axisLine={false}
                    tickLine={false}
+                   label={{ value: 'Quantidade', angle: -90, position: 'insideLeft' }}
                  />
-                 <Bar 
-                   dataKey="total" 
-                   fill="hsl(var(--primary))"
-                   radius={[0, 4, 4, 0]}
+                 <Line 
+                   type="monotone"
+                   dataKey="agendamentos" 
+                   stroke="hsl(var(--primary))"
+                   strokeWidth={2}
+                   dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
+                   activeDot={{ r: 6 }}
                  />
                  <ChartTooltip 
-                   formatter={(value) => [`${value} agendamentos`, 'Total']}
+                   formatter={(value) => [`${value} agendamentos`, 'Quantidade']}
                    labelFormatter={(label) => `Horário: ${label}`}
                  />
-               </BarChart>
+               </LineChart>
             </ResponsiveContainer>
           </ChartContainer>
         </CardContent>
@@ -172,7 +173,10 @@ export const ChartsSection = () => {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Bar>
-                <ChartTooltip content={<ChartTooltipContent />} />
+                 <ChartTooltip 
+                   formatter={(value) => [`${Math.floor(Number(value))} serviços`, 'Total']}
+                   labelFormatter={(label) => `Profissional: ${label}`}
+                 />
               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>

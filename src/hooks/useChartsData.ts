@@ -47,14 +47,13 @@ export const useChartsData = () => {
           return acc;
         }, {}) || {};
 
-      // Ordenar horários por frequência e pegar os top horários de pico
+      // Ordenar horários cronologicamente (não por frequência) para linha temporal
       const horariosPicoData = Object.entries(horariosPicoCounts)
         .map(([hora, count]) => ({
-          horario: hora,
-          total: count as number
+          hora: hora,
+          agendamentos: count as number
         }))
-        .sort((a, b) => b.total - a.total)
-        .slice(0, 10); // Top 10 horários de pico
+        .sort((a, b) => a.hora.localeCompare(b.hora)); // Ordem cronológica
 
       // Dados para performance por profissional - APENAS DO DIA ATUAL
       const profissionalCounts = dadosHoje

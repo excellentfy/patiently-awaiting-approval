@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import authBackground from "@/assets/auth-background.jpg";
 
 export const Auth = () => {
   const [email, setEmail] = useState("");
@@ -55,8 +56,23 @@ export const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
-      <Card className="w-full max-w-md bg-card border-border shadow-2xl">
+    <div 
+      className="min-h-screen flex items-center justify-center p-6 bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: `url(${authBackground})`,
+      }}
+    >
+      {/* Overlay escuro para melhor legibilidade */}
+      <div className="absolute inset-0 bg-black/50"></div>
+      
+      {/* Título da marca */}
+      <div className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10">
+        <h1 className="text-5xl font-bold text-white tracking-widest">
+          ÁSPERUS
+        </h1>
+      </div>
+
+      <Card className="w-full max-w-md bg-card/95 backdrop-blur-sm border-border shadow-2xl relative z-10">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl font-bold text-card-foreground">
             Acesso Restrito
