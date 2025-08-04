@@ -67,7 +67,7 @@ export const Auth = () => {
       
       {/* Título da marca */}
       <div className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10">
-        <h1 className="text-5xl font-bold text-white tracking-widest">
+        <h1 className="text-7xl font-bold text-white tracking-widest font-space-grotesk">
           ÁSPERUS
         </h1>
       </div>

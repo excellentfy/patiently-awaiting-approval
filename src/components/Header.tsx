@@ -1,4 +1,25 @@
+import { LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+
 export const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw error;
+      }
+      navigate("/auth");
+    } catch (error: any) {
+      toast.error("Erro ao fazer logout. Tente novamente.");
+      console.error("Erro ao fazer logout:", error.message);
+    }
+  };
+
   return (
     <header className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg border-b border-primary/20">
       <div className="container mx-auto px-6 py-8">
@@ -14,11 +35,21 @@ export const Header = () => {
               <p className="text-white/90 mt-2 text-lg font-medium">Painel de controle para agendamentos</p>
             </div>
           </div>
-          <div className="text-right">
-            <div className="bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm">
-              <p className="text-white/90 font-medium">Sistema de Agendamentos</p>
-              <p className="text-white/70 text-sm">Em tempo real</p>
+          <div className="flex items-center gap-4">
+            <div className="text-right">
+              <div className="bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm">
+                <p className="text-white/90 font-medium">Sistema de Agendamentos</p>
+                <p className="text-white/70 text-sm">Em tempo real</p>
+              </div>
             </div>
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
+            </Button>
           </div>
         </div>
       </div>
