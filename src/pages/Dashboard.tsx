@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { AgendamentosList } from "@/components/AgendamentosList";
 import { StatsCards } from "@/components/StatsCards";
 import { ChartsSection } from "@/components/ChartsSection";
+import { PainelAgendamentos } from "@/components/PainelAgendamentos";
 
 export const Dashboard = () => {
   useEffect(() => {
@@ -31,6 +32,11 @@ export const Dashboard = () => {
         {/* Lista de Agendamentos Segmentados */}
         <div className="mb-8">
           <AgendamentosList />
+        </div>
+
+        {/* Painel de Agendamentos em Tempo Real */}
+        <div className="mb-8">
+          <PainelAgendamentos />
         </div>
 
         {/* Gráficos */}
